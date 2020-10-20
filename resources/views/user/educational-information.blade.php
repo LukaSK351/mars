@@ -52,15 +52,9 @@
                                         data-position="right"  data-tooltip="@lang('user.'.$user->getStatusIn($semester))"
                                         >
                                         {{ $semester->tag() }}
-                                        
                                     </span>
                                 </li>
                                 @endforeach
-                                <script>
-                                $(document).ready(function(){
-                                    $('.tooltipped').tooltip();
-                                });
-                                </script>
                             </ul>
                         </td>
                     </tr>
@@ -70,3 +64,11 @@
 </div>
 @endif
 @endcan
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+    </script>
+@endpush
