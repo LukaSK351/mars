@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\Dormitory\PrintController;
 use App\Models\User;
+use Illuminate\Support\Facades\Bus;
+use Mockery;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +22,7 @@ class BasicTest extends TestCase
         'faults',
         'faults/table',
         'faults/update',
-        
+
         // 200 routes
         '/',
         'setlocale/{locale}',
@@ -110,6 +113,26 @@ class BasicTest extends TestCase
             }
         }
     }
+
+
+    public function testWrongUrl()
+    {
+        $response = $this->post('/print/no-paper');
+        $response->assertSee('Redirecting to http://localhost/login');
+    }
+
+    public function testClickOnNoPaper()
+    {
+        $this->withoutExceptionHandling();
+        $this->instance(PrintController::class,
+            Mockery::mock(PrintController::class,
+                function ($mock) {
+            $mock->shouldReceive()->once();
+        }));
+    }
+
+
+
 
     private function getResponse($user, $route)
     {
